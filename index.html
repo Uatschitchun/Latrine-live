@@ -152,6 +152,7 @@
                         if (data.speed < lastspeed) {
                                 trend = "\u2193";
                         }
+			speeddiff = data.speed - lastspeed;
                         lastspeed = data.speed;
 
                         // Higher or lower?
@@ -161,18 +162,19 @@
                         if (data.alt < lastalt) {
                                 trendH = "\u2193";
                         }
+			altdiff = data.alt - lastalt;
                         lastalt = data.alt;
 
                         // Expand popup 
                         popUpText = popUpText + '<b>'+ key + '<br/></b>'
                                 + '(Akku: ' + data.battery + '% / GSM: ' + data.gsm_signal + '%)<br/></p>'
-				+ '<p>Speed ( '+ trend + ' ):<br/>'
+				+ '<p>Speed ( ' + trend + ' ) / Diff: ' + speeddiff + ' m/s<br/>'
                                 + kmh.toFixed(2) + ' km/h<br/>'
                                 + data.speed + ' m/s<br/>'
                                 + pmin.toFixed() + ':' + psek.toFixed() +' min/km<br/>'
                                 + '<br/>'
                                 + 'Richtung: ' + data.bearing + ' Grad<br/>'
-                                + 'Höhe ( '+ trendH + ' ): ' + data.alt + ' m<br/>';
+                                + 'Höhe ( '+ trendH + ' ): ' + data.alt + ' m, Diff: ' + altdiff.toFixed(1) + ' m<br/>';
                                 + '</p>';
 
                         map.panTo( [data.lat,data.lon] );
