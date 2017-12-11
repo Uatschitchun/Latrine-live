@@ -1,30 +1,30 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-        <title>Locus - Wer ist Wo?</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="robots" content="noindex, nofollow, noarchive" />
-        <meta name="MSSmartTagsPreventParsing" content="true" />
-        <meta http-equiv="imagetoolbar" content="no" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <link type="image/ico" rel="shortcut icon" href="/favicon.ico" />
-        <link rel="stylesheet" href="leaflet0.6.4/leaflet.css" />
-        <!--[if lte IE 8]>
-            <link rel="stylesheet" href="leaflet0.6.4/leaflet.ie.css" />
-        <![endif]-->
-        <script src="leaflet0.6.4/leaflet.js"></script>
-        <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
-        <style type="text/css">
-        <!--
-                body {
-                        padding: 0;
-                        margin: 0;
-                }
-                html, body, #map {
-                        height: 100%;
-                }
-        -->
-        </style>
+	<title>Locus - Wer ist Wo?</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="noindex, nofollow, noarchive" />
+	<meta name="MSSmartTagsPreventParsing" content="true" />
+	<meta http-equiv="imagetoolbar" content="no" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<link type="image/ico" rel="shortcut icon" href="/favicon.ico" />
+	<link rel="stylesheet" href="leaflet0.6.4/leaflet.css" />
+	<!--[if lte IE 8]>
+		<link rel="stylesheet" href="leaflet0.6.4/leaflet.ie.css" />
+	<![endif]-->
+	<script src="leaflet0.6.4/leaflet.js"></script>
+	<script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<style type="text/css">
+	<!--
+		body {
+		padding: 0;
+		margin: 0;
+		}
+		html, body, #map {
+		height: 100%;
+		}
+	-->
+	</style>
 </head>
 <body>
 
@@ -33,176 +33,204 @@
 <script type="text/javascript">
 
 
-        /****** Adjust the following location (URL) to your Perl script *********/
+	/****** Adjust the following location (URL) to your Perl script *********/
 
-        var phpScript = 'latrine.php'; // /cgi-bin/latrine.pl
+	var phpScript = 'latrine.php'; // /cgi-bin/latrine.pl
 
-        /*** Change the following only if you know what you're doing *********/
+	/*** Change the following only if you know what you're doing *********/
 
 
-        // OpenStreetMap
-        var osmUrl = 'http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', // http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
-                osmAttribution = 'Map Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> (<a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-by-SA 2.0</a>)',
-                osm = new L.TileLayer(osmUrl, {maxZoom: 18, attribution: osmAttribution});
-        // OpenCycleMap
-        var cyclemapUrl = 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
-                cyclemap = new L.TileLayer(cyclemapUrl, {maxZoom: 18, attribution: osmAttribution});
-        // Hike and Bike
-        var hikebikeUrl = 'http://toolserver.org/tiles/hikebike/{z}/{x}/{y}.png',
-                hikebike = new L.TileLayer(hikebikeUrl, {maxZoom: 18, attribution: osmAttribution});
-        // ESRI
-        var esriUrl = "http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}.png",
-                esriAttribution = "National Geographic, Esri, DeLorme, NAVTEQ",
-                esri = new L.TileLayer(esriUrl, {maxZoom: 16, attribution: esriAttribution});
-        // Hillshading
-        var hillshadingUrl = 'http://toolserver.org/~cmarqu/hill/{z}/{x}/{y}.png',
-                hillshadingAttribution = 'Elevation Data by <a href="http://www.nasa.gov/" target="_blank">NASA SRTM</a>',
-                hillshading = new L.TileLayer(hillshadingUrl, {maxZoom: 18, attribution: hillshadingAttribution});
+	// Initialize some Variables
+	var lastspeed = 0;
+	var lastalt = 0;
+	var center = 0;
+	var autoPan = 1;
 
-        var baseMaps = {
-                "OpenStreetMap": osm,
-                "OpenCycleMap": cyclemap,
-                "Hike & Bike": hikebike,
-                "ESRI": esri
-        };
-        var overlayMaps = {
-                "Hillshading": hillshading
-        };
-        var layersControl = new L.Control.Layers(baseMaps, overlayMaps);
+	// OpenStreetMap
+	var osmUrl = 'http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', // http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
+		osmAttribution = 'Map Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> (<a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-by-SA 2.0</a>)',
+		osm = new L.TileLayer(osmUrl, {maxZoom: 18, attribution: osmAttribution});
+	// OpenCycleMap
+	var cyclemapUrl = 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+		cyclemap = new L.TileLayer(cyclemapUrl, {maxZoom: 18, attribution: osmAttribution});
+	// Hike and Bike
+	var hikebikeUrl = 'http://toolserver.org/tiles/hikebike/{z}/{x}/{y}.png',
+		hikebike = new L.TileLayer(hikebikeUrl, {maxZoom: 18, attribution: osmAttribution});
+	// ESRI
+	var esriUrl = "http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}.png",
+		esriAttribution = "National Geographic, Esri, DeLorme, NAVTEQ",
+		esri = new L.TileLayer(esriUrl, {maxZoom: 16, attribution: esriAttribution});
+	// Hillshading
+	var hillshadingUrl = 'http://toolserver.org/~cmarqu/hill/{z}/{x}/{y}.png',
+		hillshadingAttribution = 'Elevation Data by <a href="http://www.nasa.gov/" target="_blank">NASA SRTM</a>',
+		hillshading = new L.TileLayer(hillshadingUrl, {maxZoom: 18, attribution: hillshadingAttribution});
 
-        // Set default until the first update
-        var map = new L.Map('map', {
-                center: new L.LatLng(51.4768, 0.0006),
-                zoom: 14,
-                layers: [hikebike]
-        });
-        map.addControl(layersControl);
-        var marker = L.marker([51.4768, 0.0006]);
-        marker.addTo(map);
-        marker.bindPopup("<b>Derzeit nicht auf Sendung</b>").openPopup();
-        var circle = L.circle([51.4768, 0.0006], 100, {
-                color: 'blue',
-                fillColor: '#f03',
-                fillOpacity: 0.5
-        }).addTo(map);
+	var baseMaps = {
+		"OpenStreetMap": osm,
+		"OpenCycleMap": cyclemap,
+		"Hike & Bike": hikebike,
+		"ESRI": esri
+	};
+	var overlayMaps = {
+		"Hillshading": hillshading
+	};
+	var layersControl = new L.Control.Layers(baseMaps, overlayMaps);
 
-        // Check private key
-        var key =  window.location.hash.substring(1);
+	// Set default until the first update
+	var map = new L.Map('map', {
+		center: new L.LatLng(51.4768, 0.0006),
+		zoom: 14,
+		layers: [hikebike]
+	});
+	map.addControl(layersControl);
 
-        if (!key.match(/^[\w\d]{5,15}$/)) {
-                Check = prompt('Schlüssel (5-15 Stellen)?','');
-                if (!Check.match(/^[\w\d]{5,15}$/)) {
-                        window.alert('Bitte richtigen Schlüssel angeben');
-                        key = '';
-                } else {
-                        key = Check;
-                        window.alert('Hallo, ' + key + '  ! \nDies ist ein gültiger Schlüssel?\n\nIhr direkter Link lautet:\nhttp://latrine.prodeia.de/live/#' + key + '');
-                }
-        } else {
-                window.alert('Hallo, ' + key + '  ! \nDies ist ein gültiger Schlüssel?');
-        }
+	var marker = L.marker([51.4768, 0.0006]);
+	marker.addTo(map);
+	marker.bindPopup("<b>Derzeit nicht auf Sendung</b>").openPopup();
+	var circle = L.circle([51.4768, 0.0006], 100, {
+		color: 'blue',
+		fillColor: '#f03',
+		fillOpacity: 0.5
+	}).addTo(map);
 
-        // Initialize Variables
-        var lastspeed = 0;
-        var lastalt = 0;
-        var center = 0;
+	// Create Auto-Pan control for to switch auto panning of map on/off
+	var AutoPanCheckbox = L.control({position: 'topright'});
+	AutoPanCheckbox.onAdd = function (map) {
+		var div = L.DomUtil.create('div', 'AutoPanCheckbox');
 
-        // Fetch latlon data
-        var refreshPos = function(){
-                $.getJSON(phpScript+'?view=1&key='+key+'', function(data) {
-                        //alert(JSON.stringify(data)); // Output Data for debug
-                        marker.setLatLng([data.lat,data.lon]);
-                        circle.setLatLng([data.lat,data.lon]);
-                        circle.setRadius(data.acc);
+		div.innerHTML = '<b><form><input id="AutoPanCheckbox" type="checkbox"/>Auto-Pan</form></b>'; 
+		return div;
+	};
+	AutoPanCheckbox.addTo(map);
+	document.getElementById("AutoPanCheckbox").checked = true;
 
-                        // Center the map on first load
-                        if (center < 1) {
-                                map.setView( [data.lat,data.lon], 15 )
-                                center = 1;
-                        }
+	// Add the event handler so that panning gets (de-)activated
+	function handleAutoPan() {
+		if (this.checked == 1) {
+			autoPan = 1;
+		} else {
+			autoPan = 0;
+		}
+	//	alert("Clicked, checked = " + this.checked + " / " + autoPan);
+	};
 
-                        // Calculate the time of last update
-                        var lastupdate = data.now - data.time;
-                        var minutes = Math.floor(lastupdate / 60);
-                        var seconds = lastupdate % 60;
-                        minutes = minutes < 9 ? "0"+minutes : minutes;
-                        seconds = seconds < 9 ? "0"+seconds : seconds;
+	document.getElementById ("AutoPanCheckbox").addEventListener ("click", handleAutoPan, false);
 
-                        // Update popup
-                        var popUpText = '<p>Alter der Position: '+ minutes+':'+seconds +' Minuten<br>';
 
-                        // Calculate speed (m/sec -> km/h ...)
-                        var kmh = data.speed * 3.6;
-                        var psec = 3600 / kmh;
-                        var pmin = psec / 60;
-                                pmin = Math.floor(pmin);
-                        var psek = psec - pmin * 60;
-                        var trend = "\u2192";
-                        var trendH = "\u2192";
+	// Check private key
+	var key =  window.location.hash.substring(1);
 
-                        if (data.speed == 0) {
-                                var pmin = 0;
-                                var psek = 0;
-                        }
+	if (!key.match(/^[\w\d]{5,15}$/)) {
+		Check = prompt('Schlüssel (5-15 Stellen)?','');
+		if (!Check.match(/^[\w\d]{5,15}$/)) {
+			window.alert('Bitte richtigen Schlüssel angeben');
+			key = '';
+		} else {
+			key = Check;
+			window.alert('Hallo, ' + key + '  ! \nDies ist ein gültiger Schlüssel?\n\nIhr direkter Link lautet:\nhttp://latrine.prodeia.de/live/#' + key + '');
+		}
+		} else {
+			window.alert('Hallo, ' + key + '  ! \nDies ist ein gültiger Schlüssel?');
+		}
 
-                        // Faster or slower?
-                        if (data.speed > lastspeed) {
-                                trend = "\u2191";
-                        }
-                        if (data.speed < lastspeed) {
-                                trend = "\u2193";
-                        }
+	// Fetch latlon data and draw data on map
+	var refreshPos = function(){
+		$.getJSON(phpScript+'?view=1&key='+key+'', function(data) {
+			//alert(JSON.stringify(data)); // Output Data for debug
+			marker.setLatLng([data.lat,data.lon]);
+			circle.setLatLng([data.lat,data.lon]);
+			circle.setRadius(data.acc);
+
+			// Center the map on first load
+			if (center < 1) {
+				map.setView( [data.lat,data.lon], 15 )
+				center = 1;
+			}
+
+			// Calculate the time of last update
+			var lastupdate = data.now - data.time;
+			var minutes = Math.floor(lastupdate / 60);
+			var seconds = lastupdate % 60;
+			minutes = minutes < 9 ? "0"+minutes : minutes;
+			seconds = seconds < 9 ? "0"+seconds : seconds;
+
+			// Update popup
+			var popUpText = '<p>Alter der Position: '+ minutes+':'+seconds +' Minuten<br>';
+
+			// Calculate speed (m/sec -> km/h ...)
+			var kmh = data.speed * 3.6;
+			var psec = 3600 / kmh;
+			var pmin = psec / 60;
+				pmin = Math.floor(pmin);
+			var psek = psec - pmin * 60;
+			var trend = "\u2192";
+			var trendH = "\u2192";
+
+			if (data.speed == 0) {
+				var pmin = 0;
+				var psek = 0;
+			}
+
+			// Faster or slower?
+			if (data.speed > lastspeed) {
+				trend = "\u2191";
+			}
+			if (data.speed < lastspeed) {
+				trend = "\u2193";
+			}
 			speeddiff = data.speed - lastspeed;
-                        lastspeed = data.speed;
+			lastspeed = data.speed;
 
-                        // Higher or lower?
-                        if (data.alt > lastalt) {
-                                trendH = "\u2191";
-                        };
-                        if (data.alt < lastalt) {
-                                trendH = "\u2193";
-                        }
+			// Higher or lower?
+			if (data.alt > lastalt) {
+				trendH = "\u2191";
+			};
+			if (data.alt < lastalt) {
+				trendH = "\u2193";
+			}
 			altdiff = data.alt - lastalt;
-                        lastalt = data.alt;
+			lastalt = data.alt;
 
-                        // Expand popup 
-                        popUpText = popUpText + '<b>'+ key + '<br/></b>'
-                                + '(Akku: ' + data.battery + '% / GSM: ' + data.gsm_signal + '%)<br/></p>'
+			// Expand popup 
+			popUpText = popUpText + '<b>'+ key + '<br/></b>'
+				+ '(Akku: ' + data.battery + '% / GSM: ' + data.gsm_signal + '%)<br/></p>'
 				+ '<p>Speed ( ' + trend + ' ) / Diff: ' + speeddiff + ' m/s<br/>'
-                                + kmh.toFixed(2) + ' km/h<br/>'
-                                + data.speed + ' m/s<br/>'
-                                + pmin.toFixed() + ':' + psek.toFixed() +' min/km<br/>'
-                                + '<br/>'
-                                + 'Richtung: ' + data.bearing + ' Grad<br/>'
-                                + 'Höhe ( '+ trendH + ' ): ' + data.alt + ' m, Diff: ' + altdiff.toFixed(1) + ' m<br/>';
-                                + '</p>';
+				+ kmh.toFixed(2) + ' km/h<br/>'
+				+ data.speed + ' m/s<br/>'
+				+ pmin.toFixed() + ':' + psek.toFixed() +' min/km<br/>'
+				+ '<br/>'
+				+ 'Richtung: ' + data.bearing + ' Grad<br/>'
+				+ 'Höhe ( '+ trendH + ' ): ' + data.alt + ' m, Diff: ' + altdiff.toFixed(1) + ' m<br/>';
+				+ '</p>';
 
-                        map.panTo( [data.lat,data.lon] );
-                        marker.setPopupContent(popUpText);
-                })
+			if (autoPan == 1) {
+				map.panTo( [data.lat,data.lon] );
+			}
+			marker.setPopupContent(popUpText);
+		})
 
-        };
+	};
 
-        // Fetch geojson data
-        var refreshGeo = function(){
-                $.getJSON(phpScript+'?geo=1&key='+key+'', function(data) {
-                        if (data.error) { alert('Error: ' + data.error) }
-                        var myPath = L.geoJson(data, {
-                                style: {
-                                        color: '#ff0000',
-                                        weight: 5,
-                                        opacity: 1
-                                }
-                        }).addTo(map);
-                });
-        };
+	// Fetch geojson data
+	var refreshGeo = function(){
+		$.getJSON(phpScript+'?geo=1&key='+key+'', function(data) {
+			if (data.error) { alert('Error: ' + data.error) }
+			var myPath = L.geoJson(data, {
+				style: {
+					color: '#ff0000',
+					weight: 5,
+					opacity: 1
+				}
+			}).addTo(map);
+		});
+	};
 
-        // Refresh
-        refreshPos();
-        refreshGeo();
+	// Refresh
+	refreshPos();
+	refreshGeo();
 
-        setInterval(refreshPos,5000); // 5 sec
-        //setInterval(refreshPos,50000); // 50 sec
-        //setInterval(refreshGeo,100000); // 100 sec
-        setInterval(refreshGeo,5000); // 5 sec
+	setInterval(refreshPos,5000); // 5 sec
+	//setInterval(refreshPos,50000); // 50 sec
+	//setInterval(refreshGeo,100000); // 100 sec
+	setInterval(refreshGeo,5000); // 5 sec
 </script>
