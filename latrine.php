@@ -1,9 +1,14 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
 //###### Adjust the following storage location #########
 # Storage location for files with a trailing slash to indicate a directory
- $store = '/tmp/latrine/';
+# Currently it is set to latrine's dir
+
+	$store = './'; 
+//	$store = '/tmp/latrine/';
+
 ###### Change the following only if you know what you're doing #########
 
 @$view = $_GET['view'];
