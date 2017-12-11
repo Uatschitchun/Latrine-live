@@ -54,16 +54,22 @@
 	var cyclemapUrl = 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
 		cyclemap = new L.TileLayer(cyclemapUrl, {maxZoom: 18, attribution: osmAttribution});
 	// Hike and Bike
-	var hikebikeUrl = 'http://toolserver.org/tiles/hikebike/{z}/{x}/{y}.png',
+	var hikebikeUrl = 'http://a.toolserver.org/tiles/hikebike/{z}/{x}/{y}.png',
 		hikebike = new L.TileLayer(hikebikeUrl, {maxZoom: 18, attribution: osmAttribution});
 	// ESRI
 	var esriUrl = "http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}.png",
 		esriAttribution = "National Geographic, Esri, DeLorme, NAVTEQ",
 		esri = new L.TileLayer(esriUrl, {maxZoom: 16, attribution: esriAttribution});
+
 	// Hillshading
-	var hillshadingUrl = 'http://toolserver.org/~cmarqu/hill/{z}/{x}/{y}.png',
-		hillshadingAttribution = 'Elevation Data by <a href="http://www.nasa.gov/" target="_blank">NASA SRTM</a>',
+	var hillshadingUrl = 'http://129.206.66.245:8004/tms_hs.ashx?x={x}&y={y}&z={z}',
+		hillshadingAttribution = 'Elevation Data by <a href="http://korona.geog.uni-heidelberg.de/contact.html" target="_blank">Korona</a>',
 		hillshading = new L.TileLayer(hillshadingUrl, {maxZoom: 18, attribution: hillshadingAttribution});
+
+	// Contour Lines
+	var contourshadingUrl = 'http://129.206.66.245:8006/tms_il.ashx?x={x}&y={y}&z={z}',
+		contourshadingAttribution = 'Contour Data by <a href="http://korona.geog.uni-heidelberg.de/contact.html" target="_blank">Korona</a>',
+		contourshading = new L.TileLayer(contourshadingUrl, {maxZoom: 18, attribution: contourshadingAttribution});
 
 	var baseMaps = {
 		"OpenStreetMap": osm,
@@ -72,7 +78,8 @@
 		"ESRI": esri
 	};
 	var overlayMaps = {
-		"Hillshading": hillshading
+		"Hillshading": hillshading,
+		"Contour Lines": contourshading
 	};
 	var layersControl = new L.Control.Layers(baseMaps, overlayMaps);
 
