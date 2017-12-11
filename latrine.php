@@ -15,19 +15,31 @@ ini_set('display_errors', 1);
 @$geo = $_GET['geo'];
 @$key = $_GET['key'];
 
-# Locus Pro Parameters
+####### Locus Pro Parameters
 # Latitude - current GPS latitude (in degree unit, rounded on 5 decimal places)
 @$lat = $_GET['lat'];
+
 # Longitude - current GPS longitude (in degree unit, rounded on 5 decimal places)
 @$lon = $_GET['lon'];
+
 # Altitude - current altitude value in meter (improved altitude value by filter and barometer)
 @$alt = $_GET['alt'];
+
 # Speed - current GPS speed (in m/s)
 @$speed = $_GET['speed'];
+
 # Accuracy - current GPS accuracy (in metres)
 @$acc = $_GET['acc'];
+
+# Battery - current akku (in percent)
+@$battery = $_GET['battery'];
+
+# GSM signal - current signal strength (in percent)
+@$gsm_signal = $_GET['gsm_signal'];
+
 # Bearing - current GPS bearing (in degree)
 @$bearing = $_GET['bearing'];
+
 # Time - current GPS time (in format defined by user. You may choose from predefined styles or define you own by this specification)
 #my $time = param('time') || '';
 # Text field - text field with own define key/value pair.
@@ -58,7 +70,7 @@ if ($key!="") {
         if ( $lat!="" && $lon!="" ) {
 
         if ($handle = fopen($store, "w")) {
-            fwrite($handle,'"lat":"'.$lat.'","lon":"'.$lon.'","alt":"'.$alt.'","speed":"'.$speed.'","bearing":"'.$bearing.'","acc":"'.$acc.'","time":"'.$time.'"');            
+            fwrite($handle,'"lat":"'.$lat.'","lon":"'.$lon.'","alt":"'.$alt.'","speed":"'.$speed.'","bearing":"'.$bearing.'","acc":"'.$acc.'","time":"'.$time.'","battery":"'.$battery.'","gsm_signal":"'.$gsm_signal.'"');            
             fclose($handle);
         } else {
             echo "Dateizugriffsfehler .latlon";

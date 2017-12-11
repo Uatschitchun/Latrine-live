@@ -43,7 +43,7 @@ Example:
 
 Example:
 
-	http://localhost/cgi-bin/latrine.pl?key=OnMyBike&view=1
+	http://localhost/cgi-bin/latrine.php?key=OnMyBike&view=1
 
 Reply:
 
@@ -64,7 +64,7 @@ Reply:
 
 Example:
 
-	http://localhost/cgi-bin/latrine.pl?key=OnMyBike&geo=1
+	http://localhost/cgi-bin/latrine.php?key=OnMyBike&geo=1
 
 Reply:
 

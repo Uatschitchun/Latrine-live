@@ -129,8 +129,7 @@
                         seconds = seconds < 9 ? "0"+seconds : seconds;
 
                         // Update popup
-                        var popUpText = '<p>Alter der Position: '+ minutes+':'+seconds +' Minuten </p>'
-                                + 'Schlüssel: ' + key + '<br/>';
+                        var popUpText = '<p>Alter der Position: '+ minutes+':'+seconds +' Minuten<br>';
 
                         // Calculate speed (m/sec -> km/h ...)
                         var kmh = data.speed * 3.6;
@@ -165,7 +164,9 @@
                         lastalt = data.alt;
 
                         // Expand popup 
-                        popUpText = popUpText + '<p>Speed ( '+ trend + ' ):<br/>'
+                        popUpText = popUpText + '<b>'+ key + '<br/></b>'
+                                + '(Akku: ' + data.battery + '% / GSM: ' + data.gsm_signal + '%)<br/></p>'
+				+ '<p>Speed ( '+ trend + ' ):<br/>'
                                 + kmh.toFixed(2) + ' km/h<br/>'
                                 + data.speed + ' m/s<br/>'
                                 + pmin.toFixed() + ':' + psek.toFixed() +' min/km<br/>'
