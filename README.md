@@ -3,7 +3,7 @@ Latrine-Live
 
 [Locus Map](http://www.locusmap.eu/) Android GPS live tracking server script
 
-![ScreenShot](https://i.imgur.com/0lS9wmT.png?maxwidth=480)
+![ScreenShot](https://i.imgur.com/0lS9wmT.png?maxwidth=320)
 
 Latrine-Live is an enhancement to [Latrine](https://github.com/Cyclenerd/Latrine), a minimalist GPS live tracking server script.
 It is very easy to set up and requires no database.
