@@ -72,15 +72,15 @@
 
         // Set default until the first update
         var map = new L.Map('map', {
-                center: new L.LatLng(44.43735, 7.40445),
+                center: new L.LatLng(51.4768, 0.0006),
                 zoom: 14,
                 layers: [esri]
         });
         map.addControl(layersControl);
-        var marker = L.marker([44.43735, 7.40445]);
+        var marker = L.marker([51.4768, 0.0006]);
         marker.addTo(map);
         marker.bindPopup("<b>Derzeit nicht auf Sendung</b>").openPopup();
-        var circle = L.circle([44.43735, 7.40445], 100, {
+        var circle = L.circle([51.4768, 0.0006], 100, {
                 color: 'blue',
                 fillColor: '#f03',
                 fillOpacity: 0.5
