@@ -26,6 +26,7 @@ Features
 * Delete files: It's possible to delete files on server by URL
 * Housekeeping: If not stored on /tmp device, the created files 'key'.latlaon & 'key'.geojson are kept as long as housekeeping time is set in latrine.php
 
+
 Functions
 ---------
 
@@ -135,3 +136,7 @@ Sample Configuration for Mac OS X
 * Adjust the location (URL) in `index.html` to `var phpScript = '/cgi-bin/latrine.php';`
 
 
+Issues
+------
+
+* GSM_SIGNAL currently isn't sent correctly by locus (20171211)
