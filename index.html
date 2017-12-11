@@ -140,7 +140,6 @@
 
 	document.getElementById ("AutoPanCheckbox").addEventListener ("click", handleAutoPan, false);
 
-
 	// Check private key
 	var key =  window.location.hash.substring(1);
 
@@ -177,6 +176,13 @@
 			var seconds = lastupdate % 60;
 			minutes = minutes < 9 ? "0"+minutes : minutes;
 			seconds = seconds < 9 ? "0"+seconds : seconds;
+
+			/* Housekeeping (Obsolet, done in latrine.php)
+			if (lastupdate > 24*60*60) { // 24 Stunden: 24*60*60
+				alert('Lösche')
+				$.post(phpScript+'?delete=1&key='+key);
+			}
+			*/
 
 			// Update popup
 			var popUpText = '<p>Alter der Position: '+ minutes+':'+seconds +' Minuten<br>';

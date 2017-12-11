@@ -2,18 +2,24 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-//###### Adjust the following storage location #########
+###### Adjust the following storage location #########
 # Storage location for files with a trailing slash to indicate a directory
 # Currently it is set to latrine's dir
 
 	$store = './'; 
 //	$store = '/tmp/latrine/';
 
+###### Adjust housekeeping time (if not using /tmp)
+# Set to 24h. Change to fit your needs (time is in sec)
+
+@$housekeeping = 24*60*60;
+
 ###### Change the following only if you know what you're doing #########
 
 @$view = $_GET['view'];
 @$geo = $_GET['geo'];
 @$key = $_GET['key'];
+@$delete = $_GET['delete'];
 
 ####### Locus Pro Parameters
 # Latitude - current GPS latitude (in degree unit, rounded on 5 decimal places)
@@ -66,7 +72,16 @@ echo '{';
 if ($key!="") {
         $geojson = $store.$key.".geojson";
         $store .= "$key.latlon"; # Create storage location
-        # Save latitude, longitude and other data into text file
+
+	# Housekeeping
+	if (filemtime($store)< (time()-$housekeeping)) {
+		unlink($geojson);
+		unlink($store);
+	}
+
+	##### Write to file
+
+        # Write latitude, longitude and other data into .latlon file when received from Locus
         if ( $lat!="" && $lon!="" ) {
 
         if ($handle = fopen($store, "w")) {
@@ -75,12 +90,17 @@ if ($key!="") {
         } else {
             echo "Dateizugriffsfehler .latlon";
         }
+
+	# Write latitude & longitude into .geojson file, collecting positions for track
         if ($handle = fopen($geojson, "a+")) {
                 fwrite($handle,"[ ".$lon.", ".$lat." ], ");
                 fclose($handle);
         } else {
                 echo "Dateizugriffsfehler .geojson";
         }
+
+	##### Read from file
+
         # Output latitude, longitude and other data as JSON
         } else if ($view == '1' ) {
                 if ($handle = fopen($store, "r")) {
@@ -91,6 +111,8 @@ if ($key!="") {
                 } else {
                         echo 'Dateilesefahler view=1';
                 }
+
+        # Output latitude, longitude as JSON for drawing track
         } else if ($geo == '1') {
                 if ($handle = fopen($geojson, "r")) {
                     $contents=fread($handle,filesize($geojson));
@@ -113,14 +135,22 @@ if ($key!="") {
                 } else {
                         echo 'Dateilesefehler geo=1';
                 }
+
+	# Delete .latlon & .geojson by purpose
+	} else if ($delete == '1') {
+		unlink($geojson);
+		unlink($store);
+
         # Parameters are missing
         } else {
                 echo '"error":"bad parameters"';
         }
+
 # Private key is missing
 } else {
     echo 'Schlüssel falsch oder fehlt';
 }
+
 # Done!
 echo '}';
 ?>

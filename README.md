@@ -22,6 +22,8 @@ Features
 * Multi-user: Authentication with key
 * Dialog for key: If URL is given without a direct key, a prompt shows up for to enter the key
 * Disable Auto-Pan: Panning the map is active, as long as the popup is shown. When closing the popup, the user is able to en-/disable panning by checkbox
+* Delete files: It's possible to delete files on server by URL
+* Housekeeping: If not stored on /tmp device, the created files 'key'.latlaon & 'key'.geojson are kept as long as housekeeping time is set in latrine.php
 
 Functions
 ---------
@@ -74,6 +76,18 @@ Reply:
 	  [ 6.07, 45.09 ],[ 6.07, 45.09 ],[ 6.07, 45.09 ],
 	}
 
+### Delete JSON Files created on server (be careful)
+
+        http://<SERVER>/Latrine-live/latrine.php?key=<KEY>&delete=1
+
+Example:
+
+        http://localhost/cgi-bin/latrine.php?key=OnMyBike&delete=1
+
+Reply:
+
+        { }
+
 ### Show map
 
 	http://<SERVER>/Latrine-live/index.html?#<KEY>
@@ -97,15 +111,17 @@ Installation
 
 1.) Adjust the storage location `my $store = '/tmp/latrine/';` in `latrine.php`.
 
-2.) Adjust the location (URL) to your PHP script `var phpScript = 'latrine.php';` in `index.html`.
+2.) Adjust housekeeping time, if desired, in `latrine.php`.
 
-3.) Upload `latrine.php` and `index.html` onto your web server. The PHP script `latrine.php` must be executable by the web server.
+3.) Adjust the location (URL) to your PHP script `var phpScript = 'latrine.php';` in `index.html`.
 
-4.) Configure Locus Map. Do not forget the key. The URL is: http://<SERVER>/Latrine-live/latrine.php
+4.) Upload `latrine.php` and `index.html` onto your web server. The PHP script `latrine.php` must be executable by the web server.
+
+5.) Configure Locus Map. Do not forget the key. The URL is: http://<SERVER>/Latrine-live/latrine.php
 
 ![LocusMap](http://i.imgur.com/NIRQrw8_d.jpg?maxwidth=320)
 
-5.) Go out :+1: 
+6.) Go out :+1: 
 
 
 Sample Configuration for Mac OS X
