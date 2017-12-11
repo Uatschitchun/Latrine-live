@@ -46,6 +46,8 @@
 	var center = 0;
 	var autoPan = 1;
 
+	// Maps
+	//
 	// OpenStreetMap
 	var osmUrl = 'http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', // http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
 		osmAttribution = 'Map Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> (<a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-by-SA 2.0</a>)',
@@ -53,6 +55,10 @@
 	// OpenCycleMap
 	var cyclemapUrl = 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
 		cyclemap = new L.TileLayer(cyclemapUrl, {maxZoom: 18, attribution: osmAttribution});
+	// OpentopoMap
+	var opentopoUrl = "http://a.tile.opentopomap.org/{z}/{x}/{y}.png",
+		opentopoAttribution = 'Map Data by <a href="http://opentopomap.org/" target="_blank">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC-BY-SA</a>)',
+		opentopo = new L.TileLayer(opentopoUrl, {maxZoom: 18, attribution: opentopoAttribution});
 	// Hike and Bike
 	var hikebikeUrl = 'http://a.toolserver.org/tiles/hikebike/{z}/{x}/{y}.png',
 		hikebike = new L.TileLayer(hikebikeUrl, {maxZoom: 18, attribution: osmAttribution});
@@ -60,25 +66,36 @@
 	var esriUrl = "http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}.png",
 		esriAttribution = "National Geographic, Esri, DeLorme, NAVTEQ",
 		esri = new L.TileLayer(esriUrl, {maxZoom: 16, attribution: esriAttribution});
-
+	// Shaders
+	//
 	// Hillshading
 	var hillshadingUrl = 'http://129.206.66.245:8004/tms_hs.ashx?x={x}&y={y}&z={z}',
 		hillshadingAttribution = 'Elevation Data by <a href="http://korona.geog.uni-heidelberg.de/contact.html" target="_blank">Korona</a>',
 		hillshading = new L.TileLayer(hillshadingUrl, {maxZoom: 18, attribution: hillshadingAttribution});
-
 	// Contour Lines
 	var contourshadingUrl = 'http://129.206.66.245:8006/tms_il.ashx?x={x}&y={y}&z={z}',
 		contourshadingAttribution = 'Contour Data by <a href="http://korona.geog.uni-heidelberg.de/contact.html" target="_blank">Korona</a>',
 		contourshading = new L.TileLayer(contourshadingUrl, {maxZoom: 18, attribution: contourshadingAttribution});
+	// Waymarked
+	var waymarkedshadinghikeUrl = 'http://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png',
+		waymarkedshadinghikeAttribution = 'Trails Data by <a href="http://www.waymarkedtrails.org" target="_blank">Waymarkedtrails</a>',
+		waymarkedshadinghike = new L.TileLayer(waymarkedshadinghikeUrl, {maxZoom: 18, attribution: waymarkedshadinghikeAttribution});
+	// Waymarked
+	var waymarkedshadingbikeUrl = 'http://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png',
+		waymarkedshadingbikeAttribution = 'Trails Data by <a href="http://www.waymarkedtrails.org" target="_blank">Waymarkedtrails</a>',
+		waymarkedshadingbike = new L.TileLayer(waymarkedshadingbikeUrl, {maxZoom: 18, attribution: waymarkedshadingbikeAttribution});
 
 	var baseMaps = {
 		"OpenStreetMap": osm,
 		"OpenCycleMap": cyclemap,
+		"OpenTopoMap": opentopo,
 		"Hike & Bike": hikebike,
 		"ESRI": esri
 	};
 	var overlayMaps = {
 		"Hillshading": hillshading,
+		"Trails": waymarkedshadinghike,
+		"Radrouten": waymarkedshadingbike,
 		"Contour Lines": contourshading
 	};
 	var layersControl = new L.Control.Layers(baseMaps, overlayMaps);
