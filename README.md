@@ -20,8 +20,8 @@ Features
 * Track History: The track gets recorded an displayed.
 * Multiple map layers: Currently you can choose between OpenStreetMap, OpenCylceMap, Hike and Bike (with Hillshading) and ESRI
 * Multi-user: Authentication with key
-* Dialog for key: If URL is given without a direct key, a prompt shows for to enter the key
-
+* Dialog for key: If URL is given without a direct key, a prompt shows up for to enter the key
+* Disable Auto-Pan: Panning the map is active, as long as the popup is shown. When closing the popup, the user is able to en-/disable panning by checkbox
 
 Functions
 ---------
@@ -48,14 +48,16 @@ Example:
 Reply:
 
 	{
-	  "lat": "45.09",
-	  "lon": "6.07",
-	  "alt": "0",
-	  "speed": "4.16666667",
-	  "bearing": "0",
-	  "acc": "5",
-	  "time": "1375194859",
-	  "now": "1375195150"
+	  "lat":"51.25450",
+	  "lon":"7.21661",
+	  "alt":"322.1",
+	  "speed":"0.0",
+	  "bearing":"0.0",
+	  "acc":"8.0",
+	  "time":"1513007824",
+	  "battery":"87",
+	  "gsm_signal":"0",
+	  "now":"1513008148"
 	}
 
 ### Get JSON (Track)
