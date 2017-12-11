@@ -18,7 +18,8 @@ Features
 * Tracking: Server receives data from Android device with Locus Pro installed and live tracking enabled.
 * Live following: Data sent by Locus Pro is shown live on map together with moving data.
 * Track History: The track gets recorded an displayed.
-* Multiple map layers: Currently you can choose between OpenStreetMap, OpenCylceMap, Hike and Bike (with Hillshading) and ESRI
+* Multiple map layers: Currently you can choose between OpenStreetMap, OpenCylceMap, OpenTopoMap, Hike & Bike (with Hillshading) and ESRI
+* Multiple map overlays: Currently you can choose between Hillshading, Contourlines, Waymarked Hike & Cycling
 * Multi-user: Authentication with key
 * Dialog for key: If URL is given without a direct key, a prompt shows up for to enter the key
 * Disable Auto-Pan: Panning the map is active, as long as the popup is shown. When closing the popup, the user is able to en-/disable panning by checkbox
