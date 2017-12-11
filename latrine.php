@@ -70,7 +70,7 @@ if ($key!="") {
         if ( $lat!="" && $lon!="" ) {
 
         if ($handle = fopen($store, "w")) {
-            fwrite($handle,'"lat":"'.$lat.'","lon":"'.$lon.'","alt":"'.$alt.'","speed":"'.$speed.'","bearing":"'.$bearing.'","acc":"'.$acc.'","time":"'.$time.'","battery":"'.$battery.'","gsm_signal":"'.$gsm_signal.'"');            
+            fwrite($handle,'"lat":"'.$lat.'","lon":"'.$lon.'","alt":"'.$alt.'","speed":"'.$speed.'","bearing":"'.$bearing.'","acc":"'.$acc.'","time":"'.$time.'","battery":"'.$battery.'","gsm_signal":"'.$gsm_signal.'"');
             fclose($handle);
         } else {
             echo "Dateizugriffsfehler .latlon";
