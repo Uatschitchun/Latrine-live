@@ -157,7 +157,7 @@
 			window.alert('Hallo, ' + key + '  ! \nDies ist ein gültiger Schlüssel?');
 		}
 
-	// Fetch latlon data and draw data on map
+	// Fetch latlon data and update marker and popup-data
 	var refreshPos = function(){
 		$.getJSON(phpScript+'?view=1&key='+key+'', function(data) {
 			//alert(JSON.stringify(data)); // Output Data for debug
@@ -235,7 +235,7 @@
 
 	};
 
-	// Fetch geojson data
+	// Fetch geojson data and update path on map
 	var refreshGeo = function(){
 		$.getJSON(phpScript+'?geo=1&key='+key+'', function(data) {
 			if (data.error) { alert('Error: ' + data.error) }
