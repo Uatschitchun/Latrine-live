@@ -173,7 +173,11 @@
 			// Calculate the time of last update
 			var lastupdate = data.now - data.time;
 			var minutes = Math.floor(lastupdate / 60);
+			var hours = Math.floor(minutes / 60);
+			var days = Math.floor(hours / 24);
 			var seconds = lastupdate % 60;
+			minutes = minutes - hours * 60;
+			hours = hours - days * 24;
 			minutes = minutes < 9 ? "0"+minutes : minutes;
 			seconds = seconds < 9 ? "0"+seconds : seconds;
 
@@ -185,7 +189,7 @@
 			*/
 
 			// Update popup
-			var popUpText = '<p>Alter der Position: '+ minutes+':'+seconds +' Minuten<br>';
+			var popUpText = '<p>Letzte Position: ' + days + 'd :' + hours + 'h :' + minutes + 'm :' + seconds + 's<br>';
 
 			// Calculate speed (m/sec -> km/h ...)
 			var kmh = data.speed * 3.6;
