@@ -66,6 +66,12 @@
 	var esriUrl = "http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}.png",
 		esriAttribution = "National Geographic, Esri, DeLorme, NAVTEQ",
 		esri = new L.TileLayer(esriUrl, {maxZoom: 16, attribution: esriAttribution});
+
+	// Googly Hybrid
+	var googleUrl = "http://mts.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
+		googleAttribution = "(c)2015 Google - Map data",
+		google = new L.TileLayer(googleUrl, {maxZoom: 28, attribution: googleAttribution});
+
 	// Shaders
 	//
 	// Hillshading
@@ -90,6 +96,7 @@
 		"OpenCycleMap": cyclemap,
 		"OpenTopoMap": opentopo,
 		"Hike & Bike": hikebike,
+		"Google Hybrid": google,
 		"ESRI": esri
 	};
 	var overlayMaps = {
