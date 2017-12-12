@@ -25,6 +25,7 @@ Features
 * Disable Auto-Pan: Panning the map is active, as long as the popup is shown. When closing the popup, the user is able to en-/disable panning by checkbox
 * Delete files: It's possible to delete files on server by URL
 * Housekeeping: If not stored on /tmp device, the created files 'key'.latlaon & 'key'.geojson are kept as long as housekeeping time is set in latrine.php
+* Messages: It's possible to provide a variable 'message' within locus and send free text with your position and moving data
 
 
 Functions
@@ -61,6 +62,7 @@ Reply:
 	  "time":"1513007824",
 	  "battery":"87",
 	  "gsm_signal":"0",
+	  "message":"Halbmarathon",
 	  "now":"1513008148"
 	}
 
