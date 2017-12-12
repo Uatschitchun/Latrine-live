@@ -46,6 +46,9 @@ ini_set('display_errors', 1);
 # Bearing - current GPS bearing (in degree)
 @$bearing = $_GET['bearing'];
 
+# Messag - variable Message you're able to provide with a selfdefined var in locus
+@$message = $_GET['message'];
+
 # Time - current GPS time (in format defined by user. You may choose from predefined styles or define you own by this specification)
 #my $time = param('time') || '';
 # Text field - text field with own define key/value pair.
@@ -85,7 +88,7 @@ if ($key!="") {
         if ( $lat!="" && $lon!="" ) {
 
         if ($handle = fopen($store, "w")) {
-            fwrite($handle,'"lat":"'.$lat.'","lon":"'.$lon.'","alt":"'.$alt.'","speed":"'.$speed.'","bearing":"'.$bearing.'","acc":"'.$acc.'","time":"'.$time.'","battery":"'.$battery.'","gsm_signal":"'.$gsm_signal.'"');
+            fwrite($handle,'"lat":"'.$lat.'","lon":"'.$lon.'","alt":"'.$alt.'","speed":"'.$speed.'","bearing":"'.$bearing.'","acc":"'.$acc.'","time":"'.$time.'","battery":"'.$battery.'","gsm_signal":"'.$gsm_signal.'","message":"'.$message.'"');
             fclose($handle);
         } else {
             echo "Dateizugriffsfehler .latlon";
