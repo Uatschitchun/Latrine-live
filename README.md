@@ -123,7 +123,7 @@ Installation
 
 5.) Configure Locus Map. Do not forget the key. The URL is: http://<SERVER>/Latrine-live/latrine.php
 
-![LocusMap](https://i.imgur.com/38eoK4f.jpg?maxwidth=320)
+![LocusMap](https://i.imgur.com/38eoK4f.jpg?maxwidth=200)
 
 6.) Go out :+1: 
 
