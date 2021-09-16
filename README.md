@@ -121,7 +121,7 @@ Installation
 
 4.) Add Thunderforest API Key (for Opencycle, Outdoors & Landscape Map) in `index.html` and uncomment the line.
 
-5.) Upload `latrine.php` and `index.html` onto your web server. The PHP script `latrine.php` must be executable by the web server.
+5.) Upload `latrine.php` and `index.html` onto your web server. The PHP script `latrine.php` must be executable by the web server. The leaflet directory is obsolete as we're using downloadable leaflet from CDN (since 16.9.21)
 
 6.) Configure Locus Map. Do not forget the key. The URL is: http://<SERVER>/Latrine-live/latrine.php
 
