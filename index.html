@@ -31,12 +31,16 @@
 <script type="text/javascript">
 
 
-	/****** Adjust the following location (URL) to your PHP script *********/
+	/*** Adjust the following location (URL) to your PHP script ***/
 
 	var phpScript = 'latrine.php'; // /cgi-bin/latrine.php
 
-	/*** Change the following only if you know what you're doing *********/
+        /*** If you've got an API Key for https://www.thunderforest.com/maps/ add it here and uncomment ***/
 
+//	var TFkey = 'put_your_key_here_and_uncomment';
+
+
+	/*** Change the following only if you know what you're doing ***/
 
 	// Initialize some Variables
 	var lastspeed = 0;
@@ -47,34 +51,43 @@
 	// Maps
 	//
 	// OpenStreetMap
-	var osmUrl = 'http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', // http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
-		osmAttribution = 'Map Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> (<a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-by-SA 2.0</a>)',
+	var osmUrl = 'https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', // http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
+		osmAttribution = 'Map © <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap Contributors</a> (<a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-by-SA 2.0</a>)',
 		osm = new L.TileLayer(osmUrl, {maxZoom: 18, attribution: osmAttribution});
-	// OpenCycleMap
-	var cyclemapUrl = 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
-		cyclemap = new L.TileLayer(cyclemapUrl, {maxZoom: 18, attribution: osmAttribution});
+	// Thunderforest - OpenCycleMap
+	var cyclemapUrl = "https://tile.thunderforest.com/cycle/{z}/{x}/{y}{r}.png"
+                       + ( typeof TFkey !== "undefined" ? "?apikey=" + TFkey : "" ),
+		cyclemapAttribution = 'Maps © <a href="https://www.thunderforest.com" target="_blank">Thunderforest</a>, Data © <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap Contributors</a>',
+		cyclemap = new L.TileLayer(cyclemapUrl, {maxZoom: 18, attribution: cyclemapAttribution});
+        // Thunderforest - Outdoors
+        var outdoorsmapUrl = "https://tile.thunderforest.com/outdoors/{z}/{x}/{y}{r}.png"
+                       + ( typeof TFkey !== "undefined" ? "?apikey=" + TFkey : "" ),
+                outdoorsmap = new L.TileLayer(outdoorsmapUrl, {maxZoom: 18, attribution: cyclemapAttribution});
+        // Thunderforest - Outdoors
+        var landscapemapUrl = "https://tile.thunderforest.com/landscape/{z}/{x}/{y}{r}.png"
+                       + ( typeof TFkey !== "undefined" ? "?apikey=" + TFkey : "" ),
+                landscapemap = new L.TileLayer(landscapemapUrl, {maxZoom: 18, attribution: cyclemapAttribution});
 	// OpentopoMap
-	var opentopoUrl = "http://a.tile.opentopomap.org/{z}/{x}/{y}.png",
-		opentopoAttribution = 'Map Data by <a href="http://opentopomap.org/" target="_blank">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC-BY-SA</a>)',
+	var opentopoUrl = 'https://b.tile.opentopomap.org/{z}/{x}/{y}.png',
+		opentopoAttribution = 'Map © <a href="https://opentopomap.org/copyright" target="_blank">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC-BY-SA</a>)',
 		opentopo = new L.TileLayer(opentopoUrl, {maxZoom: 18, attribution: opentopoAttribution});
 	// Hike and Bike
-	var hikebikeUrl = 'http://a.toolserver.org/tiles/hikebike/{z}/{x}/{y}.png',
+	var hikebikeUrl = 'http://{s}.tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png',
 		hikebike = new L.TileLayer(hikebikeUrl, {maxZoom: 18, attribution: osmAttribution});
 	// ESRI
-	var esriUrl = "http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}.png",
+	var esriUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}.png',
 		esriAttribution = "National Geographic, Esri, DeLorme, NAVTEQ",
 		esri = new L.TileLayer(esriUrl, {maxZoom: 16, attribution: esriAttribution});
-
 	// Googly Hybrid
-	var googleUrl = "http://mts.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
+	var googleUrl = 'https://mts.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
 		googleAttribution = "(c)2015 Google - Map data",
 		google = new L.TileLayer(googleUrl, {maxZoom: 28, attribution: googleAttribution});
 
 	// Shaders
 	//
 	// Hillshading
-	var hillshadingUrl = 'http://129.206.66.245:8004/tms_hs.ashx?x={x}&y={y}&z={z}',
-		hillshadingAttribution = 'Elevation Data by <a href="http://korona.geog.uni-heidelberg.de/contact.html" target="_blank">Korona</a>',
+	var hillshadingUrl = 'http://{s}.tiles.wmflabs.org/hillshading/{z}/{x}/{y}.png',
+		hillshadingAttribution = 'Hillshading: SRTM3 v2 <a href="http://www2.jpl.nasa.gov/srtm/" target="_blank">(NASA)</a>',
 		hillshading = new L.TileLayer(hillshadingUrl, {maxZoom: 18, attribution: hillshadingAttribution});
 	// Contour Lines
 	var contourshadingUrl = 'http://129.206.66.245:8006/tms_il.ashx?x={x}&y={y}&z={z}',
@@ -91,7 +104,9 @@
 
 	var baseMaps = {
 		"OpenStreetMap": osm,
-		"OpenCycleMap": cyclemap,
+		"TF-OpenCycleMap": cyclemap,
+		"TF-OutdoorsMap": outdoorsmap,
+		"TF-LandscapeeMap": landscapemap,
 		"OpenTopoMap": opentopo,
 		"Hike & Bike": hikebike,
 		"Google Hybrid": google,
@@ -109,7 +124,7 @@
 	var map = new L.Map('map', {
 		center: new L.LatLng(51.4768, 0.0006),
 		zoom: 14,
-		layers: [opentopo]
+		layers: [osm]
 	});
 	map.addControl(layersControl);
 
