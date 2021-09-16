@@ -18,7 +18,7 @@ Features
 * Tracking: Server receives data from Android device with Locus Pro installed and live tracking enabled.
 * Live following: Data sent by Locus Pro is shown live on map together with moving data. (all of locus possible data is supported) 
 * Track History: The track gets recorded and displayed.
-* Multiple map layers: Currently you can choose between: OpenStreetMap, OpenCylceMap, OpenTopoMap, Hike & Bike (with Hillshading), Google Hybrid and ESRI
+* Multiple map layers: Currently you can choose between: OpenStreetMap, OpenCylceMap, OutdoorsMap, LandscapeMap, OpenTopoMap, Hike & Bike (with Hillshading), Google Hybrid and ESRI
 * Multiple map overlays: Currently you can choose between: Hillshading, Contourlines, Waymarked Hike & Cycling
 * Multi-user: Authentication with key
 * Dialog for key: If URL is given without a direct key, a prompt shows up for to enter the key
@@ -119,13 +119,15 @@ Installation
 
 3.) Adjust the location (URL) to your PHP script `var phpScript = 'latrine.php';` in `index.html`.
 
-4.) Upload `latrine.php` and `index.html` onto your web server. The PHP script `latrine.php` must be executable by the web server.
+4.) Add Thunderforest API Key (for Opencycle, Outdoors & Landscape Map) in `index.html` and uncomment the line.
 
-5.) Configure Locus Map. Do not forget the key. The URL is: http://<SERVER>/Latrine-live/latrine.php
+5.) Upload `latrine.php` and `index.html` onto your web server. The PHP script `latrine.php` must be executable by the web server.
+
+6.) Configure Locus Map. Do not forget the key. The URL is: http://<SERVER>/Latrine-live/latrine.php
 
 ![LocusMap](https://i.imgur.com/38eoK4fm.jpg?maxwidth=320)
 
-6.) Go out :+1: 
+7.) Go out :+1: 
 
 
 Sample Configuration for Mac OS X
@@ -141,4 +143,3 @@ Sample Configuration for Mac OS X
 Issues
 ------
 
-* GSM_SIGNAL currently isn't sent correctly by locus (20171211)
